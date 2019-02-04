@@ -32,7 +32,7 @@ func NewRouter() *mux.Router {
 
 var routes = Routes{
 	Route{
-		"login",
+		"index",
 		"/",
 		"GET",
 		Index,
