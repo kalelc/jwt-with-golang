@@ -37,4 +37,10 @@ var routes = Routes{
 		"GET",
 		Index,
 	},
+	Route{
+		"indexPost",
+		"/",
+		"POST",
+		Index,
+	},
 }

@@ -7,10 +7,13 @@ import (
 	"github.com/gorilla/csrf"
 )
 
+const Csrf = "800238847cd9105324275e055cfbac8b464fd036852599d3debe993a462b0013"
+const Port = "3000"
+
 func main() {
 
-	csrfMiddleware := csrf.Protect([]byte("800238847cd9105324275e055cfbac8b464fd036852599d3debe993a462b0013"), csrf.Secure(false))
+	csrfMiddleware := csrf.Protect([]byte(Csrf), csrf.Secure(false))
 	router := NewRouter()
-	fmt.Println("* Listen by 3000 port")
-	http.ListenAndServe(":3000", csrfMiddleware(router))
+	fmt.Println("* Listen by " + Port + " port")
+	http.ListenAndServe(":"+Port, csrfMiddleware(router))
 }
