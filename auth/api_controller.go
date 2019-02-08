@@ -8,25 +8,28 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
+	fmt.Println(r.Cookies())
 	tokenString := r.Header.Get("jwt-token")
-
-	fmt.Println("api controller")
-
 	if tokenString != "" {
 		fmt.Println(tokenString)
 
-		token, err := Auth(tokenString)
+		token, err := Sign(tokenString)
 
 		if err != nil {
 			fmt.Println(err)
 			return
 		}
 
-		if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			w.Header().Set("Content-Type", "application/json")
-			fmt.Println(claims)
+		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			cookie := http.Cookie{
+				Name:  "JWT_TOKEN",
+				Value: tokenString,
+			}
+			http.SetCookie(w, &cookie)
+			w.WriteHeader(http.StatusOK)
 		} else {
 			fmt.Println(err)
+			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
 	}
