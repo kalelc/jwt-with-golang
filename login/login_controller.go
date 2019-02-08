@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gorilla/csrf"
@@ -24,6 +25,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 			"username": name,
+			"iss":      "login.app",
+			"aud":      "api",
+			"exp":      time.Now(),
 		})
 
 		tokenString, err := token.SignedString([]byte(Secret))
@@ -42,6 +46,5 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		}
 
 		defer resp.Body.Close()
-
 	}
 }
