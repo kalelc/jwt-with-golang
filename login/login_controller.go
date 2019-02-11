@@ -36,15 +36,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 		}
 
-		client := &http.Client{}
-		req, err := http.NewRequest("GET", "http://localhost:3001", nil)
-		req.Header.Add("jwt-token", tokenString)
-		resp, err := client.Do(req)
-
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		defer resp.Body.Close()
+		http.Redirect(w, r, "http://localhost:3001?authentication="+tokenString, http.StatusSeeOther)
+		return
 	}
 }
