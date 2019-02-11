@@ -10,7 +10,6 @@ import (
 const JwtTokenName = "jwt_token"
 
 func Index(w http.ResponseWriter, r *http.Request) {
-
 	tokenString, err := getJwt(r)
 
 	if err != nil {
