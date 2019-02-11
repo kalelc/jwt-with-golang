@@ -7,9 +7,17 @@ import (
 	jwt "github.com/dgrijalva/jwt-go"
 )
 
+const JwtTokenName = "jwt_token"
+
 func Index(w http.ResponseWriter, r *http.Request) {
-	fmt.Println(r.Cookies())
-	tokenString := r.Header.Get("jwt-token")
+
+	tokenString, err := getJwt(r)
+
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
 	if tokenString != "" {
 		fmt.Println(tokenString)
 
@@ -22,7 +30,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 
 		if _, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 			cookie := http.Cookie{
-				Name:  "JWT_TOKEN",
+				Name:  JwtTokenName,
 				Value: tokenString,
 			}
 			http.SetCookie(w, &cookie)
@@ -33,4 +41,21 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+}
+
+func getJwt(r *http.Request) (string, error) {
+	tokenString := r.URL.Query().Get("authentication")
+
+	if tokenString == "" {
+		cookie, err := r.Cookie(JwtTokenName)
+
+		if err != nil {
+			return "", err
+		}
+
+		tokenString = cookie.Value
+	}
+
+	return tokenString, nil
+
 }
