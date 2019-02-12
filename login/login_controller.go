@@ -10,9 +10,11 @@ import (
 	"github.com/gorilla/csrf"
 )
 
+type LoginController struct{}
+
 const Secret = "ee71a17fa8b84f99c3b99bdedb3b6e6910cfd59ed3fb0057ba96f72d2e952e0c4a26d0509702f2772ae20f8cc652124c88df5fb9a9b265ac12ee1af83e9ef0ba"
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func (loginControlller LoginController) Index(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		templates := template.Must(template.ParseFiles("views/login/index.html"))

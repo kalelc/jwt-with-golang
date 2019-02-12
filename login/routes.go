@@ -30,17 +30,19 @@ func NewRouter() *mux.Router {
 	return router
 }
 
+var loginController LoginController
+
 var routes = Routes{
 	Route{
 		"index",
 		"/",
 		"GET",
-		Index,
+		loginController.Index,
 	},
 	Route{
 		"indexPost",
 		"/",
 		"POST",
-		Index,
+		loginController.Index,
 	},
 }
