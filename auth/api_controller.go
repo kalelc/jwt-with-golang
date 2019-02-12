@@ -8,12 +8,14 @@ import (
 )
 
 const JwtTokenName = "jwt_token"
+const LoginHost = "http://localhost:3000"
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	tokenString, err := getJwt(r)
 
 	if err != nil {
 		fmt.Println(err)
+		http.Redirect(w, r, LoginHost, http.StatusSeeOther)
 		return
 	}
 
