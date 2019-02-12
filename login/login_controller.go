@@ -12,6 +12,7 @@ import (
 
 type LoginController struct{}
 
+const APIHost = "http://localhost:3001"
 const Secret = "ee71a17fa8b84f99c3b99bdedb3b6e6910cfd59ed3fb0057ba96f72d2e952e0c4a26d0509702f2772ae20f8cc652124c88df5fb9a9b265ac12ee1af83e9ef0ba"
 
 func (loginControlller LoginController) Index(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +39,7 @@ func (loginControlller LoginController) Index(w http.ResponseWriter, r *http.Req
 			fmt.Println(err)
 		}
 
-		http.Redirect(w, r, "http://localhost:3001?authentication="+tokenString, http.StatusSeeOther)
+		http.Redirect(w, r, APIHost+"?authentication="+tokenString, http.StatusSeeOther)
 		return
 	}
 }
