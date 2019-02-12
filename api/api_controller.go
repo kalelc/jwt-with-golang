@@ -10,7 +10,9 @@ import (
 const JwtTokenName = "jwt_token"
 const LoginHost = "http://localhost:3000"
 
-func Index(w http.ResponseWriter, r *http.Request) {
+type ApiController struct{}
+
+func (apiController ApiController) Index(w http.ResponseWriter, r *http.Request) {
 	tokenString, err := getJwt(r)
 
 	if err != nil {
