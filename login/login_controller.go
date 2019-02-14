@@ -30,7 +30,7 @@ func (loginControlller LoginController) Index(w http.ResponseWriter, r *http.Req
 			"username": name,
 			"iss":      "login.app",
 			"aud":      "api",
-			"exp":      time.Now(),
+			"exp":      time.Now().Unix(),
 		})
 
 		tokenString, err := token.SignedString([]byte(Secret))
