@@ -46,8 +46,8 @@ func (apiController ApiController) Index(w http.ResponseWriter, r *http.Request)
 	}
 }
 
-func getJwt(r *http.Request) (string, error) {
-	tokenString := r.URL.Query().Get("authentication")
+func getJwt(r *http.Request) (tokenString string, err error) {
+	tokenString = r.URL.Query().Get("authentication")
 
 	if tokenString == "" {
 		cookie, err := r.Cookie(JwtTokenName)
@@ -57,8 +57,8 @@ func getJwt(r *http.Request) (string, error) {
 		}
 
 		tokenString = cookie.Value
+	} else {
+		err = nil
 	}
-
-	return tokenString, nil
-
+	return tokenString, err
 }
